@@ -105,7 +105,7 @@ def ignore_errors():
 
 if __name__ == '__main__':
     isrunning = True
-    schedule.every(30).seconds.do(ignore_errors)
+    schedule.every(1).minute.do(ignore_errors)
 
     while isrunning:
         schedule.run_pending()
