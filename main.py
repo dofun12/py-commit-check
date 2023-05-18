@@ -72,7 +72,7 @@ def search_for_commits():
     for msg in messages['Messages']:
         msg_body = json.loads(msg['Body'])
         receipt_handle = msg['ReceiptHandle']
-        logger.info(f'The message body: {msg_body}')
+        # logger.info(f'The message body: {msg_body}')
 
         if msg_body is None:
             return False
@@ -80,6 +80,7 @@ def search_for_commits():
         if 'Message' in msg_body:
 
             real_message_str = msg_body['Message']
+            logger.info(f'Trying build {real_message_str}')
             # print(f"Received message: {real_message_str}")
             try:
                 if real_message_str is None:
