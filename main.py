@@ -74,11 +74,17 @@ def search_for_commits():
         msg_body = json.loads(msg['Body'])
         receipt_handle = msg['ReceiptHandle']
         logger.info(f'The message body: {msg_body}')
+
+        if msg_body is None:
+            return False
+
         if 'Message' in msg_body:
 
             real_message_str = msg_body['Message']
             print(f"Received message: {real_message_str}")
             try:
+                if real_message_str is None:
+                    return False
                 build_info = json.loads(real_message_str)
                 if 'job' in build_info:
                     run_job_jenkins(build_info['job'])
