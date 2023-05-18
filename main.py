@@ -7,7 +7,6 @@ import json
 import schedule
 import time
 
-
 AWS_REGION = os.getenv('AWS_REGION')
 AWS_ACCESS_KEY = os.getenv('AWS_ACCESS_KEY')
 AWS_SECRET_KEY = os.getenv('AWS_SECRET_KEY')
@@ -15,7 +14,6 @@ JENKINS_URL = os.getenv('JENKINS_URL')
 JENKINS_USER = os.getenv('JENKINS_USER')
 JENKINS_PASSWD = os.getenv('JENKINS_PASSWD')
 SQS_QUEUE_URL = os.getenv('SQS_QUEUE_URL')
-
 
 # logger config
 logger = logging.getLogger()
@@ -53,6 +51,7 @@ def delete_queue_message(queue_url, receipt_handle):
     else:
         return response
 
+
 def run_job_jenkins(job_name: str):
     import jenkins
     server = jenkins.Jenkins(JENKINS_URL, username=JENKINS_USER, password=JENKINS_PASSWD)
@@ -62,6 +61,7 @@ def run_job_jenkins(job_name: str):
 
     jobs = server.get_jobs()
     server.build_job(job_name)
+
 
 def search_for_commits():
     QUEUE_URL = SQS_QUEUE_URL
@@ -110,6 +110,3 @@ if __name__ == '__main__':
     while isrunning:
         schedule.run_pending()
         time.sleep(1)
-
-
-
