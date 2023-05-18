@@ -9,7 +9,7 @@ jobs:
       - name: sns-pub-job
         uses: nothingalike/sns-publish-topic@v1.6
         with:
-            MESSAGE: "python_exec_v380_move_detector"
+            MESSAGE: "pipeline_latest_py-commit-check"
             TOPIC_ARN: "arn:aws:sns:us-east-1:454254817135:githhub_commit_topic"
         env:
             AWS_REGION: ${{ secrets.AWS_REGION }}
