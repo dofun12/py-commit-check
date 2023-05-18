@@ -66,7 +66,6 @@ def run_job_jenkins(job_name: str):
 def search_for_commits():
     QUEUE_URL = SQS_QUEUE_URL
     messages = receive_queue_message(QUEUE_URL)
-    print(messages)
     if not 'Messages' in messages:
         logger.info('Not message found =/')
         return False
@@ -81,13 +80,13 @@ def search_for_commits():
         if 'Message' in msg_body:
 
             real_message_str = msg_body['Message']
-            print(f"Received message: {real_message_str}")
+            # print(f"Received message: {real_message_str}")
             try:
                 if real_message_str is None:
                     return False
                 run_job_jenkins(real_message_str)
             except Exception as e:
-                print(e)
+                logger.exception(e)
                 return False
 
         logger.info('Deleting message from the queue...')
@@ -100,7 +99,7 @@ def ignore_errors():
     try:
         search_for_commits()
     except:
-        print('Ignoring errors')
+        logger.error('Ignoring errors')
 
 
 if __name__ == '__main__':
