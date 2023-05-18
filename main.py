@@ -85,9 +85,7 @@ def search_for_commits():
             try:
                 if real_message_str is None:
                     return False
-                build_info = json.loads(real_message_str)
-                if 'job' in build_info:
-                    run_job_jenkins(build_info['job'])
+                run_job_jenkins(real_message_str)
             except Exception as e:
                 print(e)
                 return False
@@ -98,9 +96,16 @@ def search_for_commits():
     return True
 
 
+def ignore_errors():
+    try:
+        search_for_commits()
+    except:
+        print('Ignoring errors')
+
+
 if __name__ == '__main__':
     isrunning = True
-    schedule.every(30).seconds.do(search_for_commits)
+    schedule.every(30).seconds.do(ignore_errors)
 
     while isrunning:
         schedule.run_pending()

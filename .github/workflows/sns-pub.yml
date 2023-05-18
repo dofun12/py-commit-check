@@ -1,0 +1,17 @@
+name: Publish SNS Topic
+
+on: push
+
+jobs:
+  prebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: sns-pub-job
+        uses: nothingalike/sns-publish-topic@v1.6
+        with:
+            MESSAGE: "python_exec_v380_move_detector"
+            TOPIC_ARN: "arn:aws:sns:us-east-1:454254817135:githhub_commit_topic"
+        env:
+            AWS_REGION: ${{ secrets.AWS_REGION }}
+            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
